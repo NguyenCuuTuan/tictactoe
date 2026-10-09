@@ -4,19 +4,56 @@
 #include "Board.h"
 #include "AI.h"
 
-class Game{
-    private:
-        Board board;
-        AI ai;
-        int currentPlayer;
+enum GameState
+{
+    LOGIN_SCREEN,
+    REGISTER_SCREEN,
+    MENU_SCREEN,
+    GAMEPLAY,
+    GAME_OVER
+};
 
-    public:
-        Game();
-        bool playerMove(Move move);
-        void nextTurn();
-        void aiMove();
-        bool isGameOver();
-        Board& getBoard(); 
+class Game
+{
+private:
+    Board board;
+    AI ai;
+
+    int currentPlayer;
+    GameState currentState;
+    int gameResult;
+
+public:
+    Game();
+
+    bool playerMove(Move move);
+
+    void nextTurn();
+
+    void aiMove();
+
+    bool isGameOver();
+
+    Board& getBoard();
+
+    GameState getState() const
+    {
+        return currentState;
+    }
+
+    void setState(GameState state)
+    {
+        currentState = state;
+    }
+
+    int getResult() const
+    {
+        return gameResult;
+    }
+
+    void checkAndSetResult();
+
+    void reset();
 };
 
 #endif
